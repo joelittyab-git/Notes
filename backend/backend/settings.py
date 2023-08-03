@@ -48,7 +48,7 @@ INSTALLED_APPS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
+        'User.user_auth.UserAuthenticationSchema',
     ),
     
     'DEFAULT_PERMISSION_CLASSES': [
@@ -65,7 +65,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',   
-    #"__Middlewares.Authentication.CSRFAttacher"
 ]
 
 ROOT_URLCONF = 'backend.urls'
