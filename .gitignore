@@ -1,0 +1,4 @@
+backend/__venv
+backend/__config/credentials.py
+frontned/node_modules
+*.pyc
