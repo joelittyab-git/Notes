@@ -7,19 +7,26 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
 '''
------------------------------------------------------------------------------------------Login-View-------------------------------------------------------------------------------------------------
-**URL["/user/login/"] => returns token for user authentciation
+-----------------------------------------------------------------------------------------Authentication-View-------------------------------------------------------------------------------------------------
+**URL["/user/auth/"] => returns token for user authentciation
      :request:{"username":---,"password":---}(POST)
      :response:
           {"auth_status":"success", "auth_data":{"auth_token":...}} -> authentication successfull
           {"auth_status":"fail"} -> incorrect credentials
           {"auth_status":"err", info:{...} } -> exception
           
-**URL["/user/login/"] => returns authentication status and user credentials
+**URL["/user/auth/"] => returns authentication status and user credentials
      :request:{}(GET)
      :response:
           {"auth_status":"success",user:{...}} -> authentication successfull
-          {"auth_status":"fail"} -> incorrect credentials
+          {"auth_status":"fail"} -> incorrect credentials        
+          
+**URL["/user/auth/] => logs the user out by deleting the respective token
+     :request::{}(DELETE)
+     :response:
+          {"auth_status":"success"} -> token deletion successfull
+          {"auth_status":"err", "info":{...} } -> exception
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 '''
 class UserAuthView(APIView):
@@ -52,5 +59,13 @@ class UserAuthView(APIView):
           return Response({"user":str(user)})
      
      def delete(self, request, *args):
-          pass
+          try:
+               # accesing and deleting the existing token
+               user = request.user
+               status = Token.objects.get(user = user).delete()
+               
+               return Response({"auth_status":"success"})
+               
+          except Exception as e:
+               return Response({"auth_status":"err", "info":{str(e)} })
           

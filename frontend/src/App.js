@@ -16,6 +16,8 @@ const Login = () => {
          }
         )
 
+        console.log(response)
+
         const cookie = new Cookies();
         cookie.set("Token-Auth","0d09a7040e397a6d02cac3475e55ea17bd18eb8c",{secure:true});
         window.location.href = "http://localhost:3000/user/login";
