@@ -47,7 +47,7 @@ class UserAuthView(APIView):
           if(user_auth is  None):
                return Response({"auth_status":"fail"})
           
-          #Generating token for user
+          #Generating token for user and storing it in the db
           user = User.objects.get(username = username)
           user_token = Token.objects.create(user = user)
           
