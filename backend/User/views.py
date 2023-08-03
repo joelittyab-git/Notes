@@ -35,8 +35,8 @@ class UserAuthView(APIView):
      def post(self, request, **args):
           
           try:
-               username = request.data.username
-               password = request.data.password
+               username = request.data.get("username")
+               password = request.data.get("password")
                
           except Exception as e:
                return Response({"auth_status":"err", "data":{str(e)}})
@@ -51,7 +51,7 @@ class UserAuthView(APIView):
           user = User.objects.get(username = username)
           user_token = Token.objects.create(user = user)
           
-          return Response({"auth_status":"success", "auth_data":{"auth_token":user_token}})
+          return Response({"auth_status":"success", "auth_data":{"auth_token":str(user_token)}})
      
      def get(self, request, **args):
           user = request.user
