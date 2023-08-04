@@ -269,6 +269,7 @@ const NavBar = () => {
       {renderMobileMenu}
       {renderMenu}
     </Box>    
+    <Outlet/>
     </>
   )
 };

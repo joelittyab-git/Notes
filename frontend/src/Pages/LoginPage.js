@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { CssVarsProvider, useColorScheme } from '@mui/joy/styles';
+import {useState} from 'react'
 import Sheet from '@mui/joy/Sheet';
 import Typography from '@mui/joy/Typography';
 import FormControl from '@mui/joy/FormControl';
@@ -7,37 +8,77 @@ import FormLabel from '@mui/joy/FormLabel';
 import Input from '@mui/joy/Input';
 import Button from '@mui/joy/Button';
 import Link from '@mui/joy/Link';
+import Alert from 'react-bootstrap/Alert';
+import BaseClient from '../Base/Api/BaseClient';
+import { redirect } from 'react-router-dom';
 
-function ModeToggle() {
-  const { mode, setMode } = useColorScheme();
-  const [mounted, setMounted] = React.useState(false);
 
-  // necessary for server-side rendering
-  // because mode is undefined on the server
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-  if (!mounted) {
-    return null;
-  }
-
-  return (
-    <Button
-      variant="soft"
-      onClick={() => {
-        setMode(mode === 'light' ? 'dark' : 'light');
-      }}
-    >
-      {mode === 'light' ? 'Turn dark' : 'Turn light'}
-    </Button>
-  );
-}
 
 export default function LoginPage() {
+
+  //login form
+  const [FormData, setFormData] = useState(
+    {
+      username:"",
+      password:"",
+      submissionStatus:false
+    }
+  );
+
+  const [loginStatus, setLoginStatus] = useState(true);
+
+  //login handler
+  const loginHandler = async(e) => {
+    e.preventDefault();
+
+    setFormData(()=>({ submissionStatus:true}));
+    const postData = {
+      "username":FormData.username,
+      "password":FormData.password
+    }
+
+    //posting request
+    const response = await BaseClient.post('user/auth/',postData);
+
+    let data = response.data;
+
+    console.log(data);
+
+    //checking auth status
+    if(data.auth_status==="success"){
+      //accessing the auth token and saving from the response if succcessfull
+      const auth_token = data.auth_data.auth_token;
+      localStorage.setItem("Authorization","Token "+auth_token);
+      redirect("/notes");
+    }else if(data.auth_status==="fail"){
+      setLoginStatus(false);
+    }else{
+
+    }
+
+    setFormData({submissionStatus:false});
+  }
+
+  const handleChange = event  =>{
+
+    console.log(FormData);
+    if(event.target.type == "email"){
+      setFormData({...FormData,username:event.target.value});
+    }else if(event.target.type == "password"){
+      setFormData({...FormData,password:event.target.value});
+    }
+  }
+
+
   return (
     <CssVarsProvider>
+          <div className="alert" hidden={loginStatus==true}>
+            <Alert variant='danger'>
+              Incorrect username or password
+            </Alert>
+          </div>
+
       <main>
-        <ModeToggle />
         <Sheet
           sx={{
             width: 300,
@@ -53,6 +94,7 @@ export default function LoginPage() {
           }}
           variant="outlined"
         >
+          
           <div>
             <Typography level="h4" component="h1">
               <b>Welcome!</b>
@@ -60,12 +102,13 @@ export default function LoginPage() {
             <Typography level="body-sm">Sign in to continue.</Typography>
           </div>
           <FormControl>
-            <FormLabel>Email</FormLabel>
+            <FormLabel>Username</FormLabel>
             <Input
               // html input attribute
               name="email"
               type="email"
-              placeholder="johndoe@email.com"
+              placeholder="username"
+              onChange={handleChange}
             />
           </FormControl>
           <FormControl>
@@ -75,10 +118,11 @@ export default function LoginPage() {
               name="password"
               type="password"
               placeholder="password"
+              onChange={handleChange}
             />
           </FormControl>
 
-          <Button sx={{ mt: 1 /* margin top */ }}>Log in</Button>
+          <Button sx={{ mt: 1 /* margin top */ }} loading={FormData.submissionStatus===true} onClick={loginHandler}>Log in</Button>
           <Typography
             endDecorator={<Link href="/sign-up">Sign up</Link>}
             fontSize="sm"
