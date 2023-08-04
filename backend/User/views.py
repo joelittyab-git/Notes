@@ -47,6 +47,11 @@ class UserAuthView(APIView):
           if(user_auth is  None):
                return Response({"auth_status":"fail"})
           
+          # Deleting existing tokens if there exists a to the given url
+          if(request.user.is_authenticated):
+               user = request.user
+               status = Token.objects.get(user = user).delete()
+               
           #Generating token for user and storing it in the db
           user = User.objects.get(username = username)
           user_token = Token.objects.create(user = user)
