@@ -34,6 +34,7 @@ class UserAuthView(APIView):
      
      def post(self, request, **args):
           
+          
           try:
                username = request.data.get("username")
                password = request.data.get("password")
@@ -41,25 +42,36 @@ class UserAuthView(APIView):
           except Exception as e:
                return Response({"auth_status":"err", "data":{str(e)}})
           
+          # Deleting existing tokens if there exists a to the given url
+          print(request.user)
+          if(request.user.is_authenticated):
+               user = request.user
+               print("Hello world")
+               status = Token.objects.get(user = user).delete()
+          
           #authenticating user django's authentciation
           user_auth = authenticate(username = username, password =  password)
           
           if(user_auth is  None):
-               return Response({"auth_status":"fail"})
+               return Response({"auth_status":"fail", "data":"incorrect credetials"})
           
-          # Deleting existing tokens if there exists a to the given url
-          if(request.user.is_authenticated):
-               user = request.user
-               status = Token.objects.get(user = user).delete()
                
           #Generating token for user and storing it in the db
           user = User.objects.get(username = username)
-          user_token = Token.objects.create(user = user)
+          try:
+               user_token = Token.objects.create(user = user)
+          except Exception as e:
+               user = request.user
+               status = Token.objects.get(user = user).delete()
+               user_token = Token.objects.create(user = user)
+          except Exception as e:
+               return Response({"auth_status":"err","data":str(e)})
           
           return Response({"auth_status":"success", "auth_data":{"auth_token":str(user_token)}})
      
      def get(self, request, **args):
           user = request.user
+          print(user.is_authenticated)
           
           return Response({"user":str(user)})
      

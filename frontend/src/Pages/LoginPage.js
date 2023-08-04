@@ -37,8 +37,24 @@ export default function LoginPage() {
       "password":FormData.password
     }
 
+    const token = sessionStorage.getItem("Authorization");
+    
+    let config={};
+
+    if(token!==null){
+      postData += {
+        headers:{
+          Authorization:"Token 1866eb5c8df3fff45a24a2edf78085261264b036"
+        }
+      };
+    }
+
+
     //posting request
-    const response = await BaseClient.post('user/auth/',postData);
+    const response = await BaseClient.post(
+      'user/auth/',
+      postData,
+    );
 
     let data = response.data;
 
@@ -61,7 +77,6 @@ export default function LoginPage() {
 
   const handleChange = event  =>{
 
-    console.log(FormData);
     if(event.target.type == "email"){
       setFormData({...FormData,username:event.target.value});
     }else if(event.target.type == "password"){
