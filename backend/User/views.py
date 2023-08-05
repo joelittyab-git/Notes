@@ -61,7 +61,6 @@ class UserAuthView(APIView):
                try:
                     status = Token.objects.get(user = user).delete()
                     user_token = Token.objects.create(user = user)
-               
                except Exception as e:
                     return Response({"auth_status":"err","data":str(e)})
           

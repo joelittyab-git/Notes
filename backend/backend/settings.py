@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken', 
     
     'User.apps.UserConfig',
+    'Notes.apps.NotesConfig'
 ]
 
 REST_FRAMEWORK = {
