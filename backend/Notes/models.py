@@ -49,7 +49,7 @@ class CollabPannel(models.Model):
           db_table = "NoteGroup"
           
 '''
-------------------------------------------------------------------------------NotesGrout-Membership-model-------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------NotesGroup-Membership-model-------------------------------------------------------------------------------------------------
 [user]:ForeignKey -> the user wchich joined the colab pannel
 [group]:ForeignKey -> the group to  which the user joined
 [membership_type]:CharField -> describes the type of membership the user has in the group
