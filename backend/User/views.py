@@ -84,3 +84,19 @@ class UserAuthView(APIView):
           except Exception as e:
                return Response({"auth_status":"err", "info":{str(e)} })
           
+
+'''
+-------------------------------------------------------------------------------------User-Registration-View---------------------------------------------------------------------------------------------------
+**URL["/user/registration/"] => returns token for user authentciation
+     :request:{"username":---,"password":---,""}(POST)
+     :response:
+          
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+'''
+class UserRegistrationView(APIView):
+     permission_classes=[AllowAny]
+     
+     def post(self, request, *args, **kwargs):
+          pass
+     
+          
