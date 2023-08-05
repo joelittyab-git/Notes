@@ -14,7 +14,7 @@ from django.contrib.auth.models import User
 '''
 class Notes(models.Model):
      key = models.BigAutoField(primary_key=True)
-     auhtor = models.ForeignKey(User,on_delete=models.CASCADE)
+     author = models.ForeignKey(User,on_delete=models.CASCADE)
      title = models.CharField(max_length=100)
      body = models.CharField(max_length=800)
      created = models.DateTimeField(auto_now_add=True)
@@ -33,17 +33,34 @@ class Notes(models.Model):
 [notes]:ForeignKey -> many notes whcih are related to one CollabPannel
 [title]:CharField -> stores the title of the group name
 [members]:CharField -> stores the users which are a part of that particular group
-[created]:DateTiemField -> sotres the date and time of the note created
-[eidted]:DateTiemField -> sotres the date and time of the note edited
+[created]:DateTimeField -> sotres the date and time of the note created
+[eidted]:DateTimeField -> sotres the date and time of the note edited
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 '''
 class CollabPannel(models.Model):
      key = models.BigAutoField(primary_key=True)
      title = models.CharField(max_length=100, blank=True, null=True)
-     members = models.ManyToManyField(User)
-     notes = models.ForeignKey(Notes, on_delete=models.DO_NOTHING)
+     members = models.ManyToManyField(User, through='CollabPannelMembership')
+     notes = models.ManyToManyField(Notes)
      created = models.DateTimeField(auto_now_add=True)
      edited = models.DateTimeField(auto_now=True)
      
      class Meta:
           db_table = "NoteGroup"
+          
+'''
+------------------------------------------------------------------------------NotesGrout-Membership-model-------------------------------------------------------------------------------------------------
+[user]:ForeignKey -> the user wchich joined the colab pannel
+[group]:ForeignKey -> the group to  which the user joined
+[membership_type]:CharField -> describes the type of membership the user has in the group
+[joined]:DateTimeField -> sotres the date and time of the user joined
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+'''         
+class CollabPannelMembership(models.Model):
+     user = models.ForeignKey(User, on_delete=models.CASCADE)
+     group = models.ForeignKey(CollabPannel, models.CASCADE)
+     membership_type = models.CharField(max_length=50)
+     joined = models.DateTimeField(auto_now_add=True)
+     
+     def __str__(self) -> str:
+          return f"{self.user.username} -- {self.group.title}"
