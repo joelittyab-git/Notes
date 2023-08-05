@@ -33,8 +33,7 @@ class UserAuthView(APIView):
      permission_classes = [AllowAny]
      
      def post(self, request, **args):
-          
-          
+               
           try:
                username = request.data.get("username")
                password = request.data.get("password")
@@ -43,10 +42,8 @@ class UserAuthView(APIView):
                return Response({"auth_status":"err", "data":{str(e)}})
           
           # Deleting existing tokens if there exists a to the given url
-          print(request.user)
           if(request.user.is_authenticated):
                user = request.user
-               print("Hello world")
                status = Token.objects.get(user = user).delete()
           
           #authenticating user django's authentciation
@@ -61,11 +58,12 @@ class UserAuthView(APIView):
           try:
                user_token = Token.objects.create(user = user)
           except Exception as e:
-               user = request.user
-               status = Token.objects.get(user = user).delete()
-               user_token = Token.objects.create(user = user)
-          except Exception as e:
-               return Response({"auth_status":"err","data":str(e)})
+               try:
+                    status = Token.objects.get(user = user).delete()
+                    user_token = Token.objects.create(user = user)
+               
+               except Exception as e:
+                    return Response({"auth_status":"err","data":str(e)})
           
           return Response({"auth_status":"success", "auth_data":{"auth_token":str(user_token)}})
      
@@ -79,9 +77,10 @@ class UserAuthView(APIView):
           try:
                # accesing and deleting the existing token
                user = request.user
+               print(user)
                status = Token.objects.get(user = user).delete()
                
-               return Response({"auth_status":"success"})
+               return Response({"auth_status":"success", "action":f"token_deletion+{status}"})
                
           except Exception as e:
                return Response({"auth_status":"err", "info":{str(e)} })

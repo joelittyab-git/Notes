@@ -31,25 +31,24 @@ export default function LoginPage() {
   const loginHandler = async(e) => {
     e.preventDefault();
 
-    setFormData(()=>({ submissionStatus:true}));
+    setFormData(()=>({...FormData, submissionStatus:true}));
     const postData = {
       "username":FormData.username,
       "password":FormData.password
     }
 
-    const token = sessionStorage.getItem("Authorization");
+
+    //Deletion of token if exists
+    const token = localStorage.getItem("Authorization");
     
     let config={};
 
     if(token!==null){
-      postData += {
-        headers:{
-          Authorization:"Token 1866eb5c8df3fff45a24a2edf78085261264b036"
-        }
-      };
+      const res = await BaseClient.delete('user/auth/',{headers:{Authorization:token}});
+      localStorage.removeItem("Authorization");
     }
 
-
+    console.log("posting")
     //posting request
     const response = await BaseClient.post(
       'user/auth/',
@@ -58,12 +57,11 @@ export default function LoginPage() {
 
     let data = response.data;
 
-    console.log(data);
-
     //checking auth status
     if(data.auth_status==="success"){
       //accessing the auth token and saving from the response if succcessfull
       const auth_token = data.auth_data.auth_token;
+      setLoginStatus(true);
       localStorage.setItem("Authorization","Token "+auth_token);
       redirect("/notes");
     }else if(data.auth_status==="fail"){
