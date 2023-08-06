@@ -64,3 +64,6 @@ class CollabPannelMembership(models.Model):
      
      def __str__(self) -> str:
           return f"{self.user.username} -- {self.group.title}"
+     
+     def get_membership_type(self) ->str:
+          return self.membership_type

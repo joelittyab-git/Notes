@@ -1,3 +1,4 @@
+from Notes.models import CollabPannelMembership
 
 '''
 (static)
@@ -13,3 +14,9 @@ class MembershipType:
      MEMBER = 'MEMBER'
      MODERATOR = 'MOD'
      VIEWER = 'VIEWER'
+     
+     
+     #getter for membership type 
+     @classmethod
+     def get_membership_type(member:CollabPannelMembership):
+          return member.membership_type
