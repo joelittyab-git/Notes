@@ -69,6 +69,7 @@ export default function LoginPage() {
       setLoginStatus(true);
       localStorage.setItem("Authorization","Token "+auth_token);
       navigate('/notes');
+      window.location.href = 'http://localhost:3000/notes';
     }else if(data.auth_status==="fail"){
       setLoginStatus(false);
     }else{

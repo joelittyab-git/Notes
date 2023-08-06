@@ -1,5 +1,6 @@
 import React from 'react'
 import {Outlet, Link} from 'react-router-dom';
+import { useHis } from 'react-router-dom';
 import OffCanvas from '../Components/OffCanvas';
 import { useState, useEffect } from 'react';
 import { styled, alpha } from '@mui/material/styles';
@@ -18,6 +19,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import BaseClient from '../Base/Api/BaseClient';
 
 //Navbar configurations
 const Search = styled('div')(({ theme }) => ({
@@ -78,6 +80,20 @@ const getAuthStatus = (setUserAuthStatus) =>{
 }
 
 const NavBar = () => {
+
+
+  //event handler to log the user out
+  const logoutUser = async(e) => {
+
+    //sending post request to delte the active session/auth token
+    const response = await BaseClient.delete('user/auth/');
+    if(response.data.auth_status==="success"){
+      localStorage.removeItem("Authorization")
+    }
+    console.log(response);
+    window.location.href = 'http://localhost:3000/user/login';
+  }
+
   //User account status for navabr icons
   const [UserAuthStatus, setUserAuthStatus] = useState(false);
   useEffect(()=>getAuthStatus(setUserAuthStatus),[]);
@@ -129,6 +145,7 @@ const NavBar = () => {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={logoutUser}>Log Out</MenuItem>
     </Menu>
   );
 

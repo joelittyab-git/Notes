@@ -68,7 +68,6 @@ class UserAuthView(APIView):
      
      def get(self, request, **args):
           user = request.user
-          print(user.is_authenticated)
           
           return Response({"user":str(user)})
      
@@ -76,7 +75,6 @@ class UserAuthView(APIView):
           try:
                # accesing and deleting the existing token
                user = request.user
-               print(user)
                status = Token.objects.get(user = user).delete()
                
                return Response({"auth_status":"success", "action":f"token_deletion+{status}"})

@@ -28,7 +28,7 @@ class Notes(models.Model):
           ordering = ['created']
 
 '''
-------------------------------------------------------------------------------NotesGrout-model-------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------NotesGroup-model[through]-------------------------------------------------------------------------------------------------
 [key]:IntegerField -> stores the primary key of the particular note
 [notes]:ForeignKey -> many notes whcih are related to one CollabPannel
 [title]:CharField -> stores the title of the group name
