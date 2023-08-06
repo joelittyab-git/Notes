@@ -88,8 +88,11 @@ class UserAuthView(APIView):
 '''
 -------------------------------------------------------------------------------------User-Registration-View---------------------------------------------------------------------------------------------------
 **URL["/user/registration/"] => returns token for user authentciation
-     :request:{"username":---,"password":---,""}(POST)
+     :request:{"username":---,"password":---,"first_name":---,"last_name":---, "email":---}(POST)
      :response:
+          {"registration_status":"success"} -> successfull user registration
+          {"registration_status":"fail"} -> invalid credentails
+          {"registration_status":"err"} -> exception occured during registration 
           
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 '''

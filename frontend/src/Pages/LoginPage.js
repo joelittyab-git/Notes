@@ -10,11 +10,13 @@ import Button from '@mui/joy/Button';
 import Link from '@mui/joy/Link';
 import Alert from 'react-bootstrap/Alert';
 import BaseClient from '../Base/Api/BaseClient';
-import { redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 
 export default function LoginPage() {
+  //Navigation 
+  const navigate = useNavigate();
 
   //login form
   const [FormData, setFormData] = useState(
@@ -29,6 +31,8 @@ export default function LoginPage() {
 
   //login handler
   const loginHandler = async(e) => {
+
+
     e.preventDefault();
 
     setFormData(()=>({...FormData, submissionStatus:true}));
@@ -55,6 +59,7 @@ export default function LoginPage() {
       postData,
     );
 
+
     let data = response.data;
 
     //checking auth status
@@ -63,7 +68,7 @@ export default function LoginPage() {
       const auth_token = data.auth_data.auth_token;
       setLoginStatus(true);
       localStorage.setItem("Authorization","Token "+auth_token);
-      redirect("/notes");
+      navigate('/notes');
     }else if(data.auth_status==="fail"){
       setLoginStatus(false);
     }else{
