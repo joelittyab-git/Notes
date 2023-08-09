@@ -17,6 +17,7 @@ class Notes(models.Model):
      author = models.ForeignKey(User,on_delete=models.CASCADE)
      title = models.CharField(max_length=100)
      body = models.CharField(max_length=800)
+     remind_user = models.BooleanField(default=False)
      created = models.DateTimeField(auto_now_add=True)
      edited = models.DateTimeField(auto_now=True)
      

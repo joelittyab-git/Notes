@@ -17,7 +17,8 @@ import FormLabel from '@mui/joy/FormLabel';
 import Textarea from '@mui/joy/Textarea';
 import Button from '@mui/joy/Button';
 import SaveIcon from '@mui/icons-material/Save';
-
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
 
 
 const blue = {
@@ -53,8 +54,17 @@ const GreyThemedTextField = styled(TextField)(({ theme }) => ({
 
 const NotesPage = () => {
 
+  //Button states
   const [showNewNote, setShowNewNote] = useState(false);
 
+  //Form states
+  const [formData, setFormData] = useState({
+    title:"",
+    body:"",
+    remind:false
+  })
+
+  //Button actions
   const createNewNote = () => {
     console.log("Create new note");
   }
@@ -83,7 +93,14 @@ const NotesPage = () => {
 
                   <FormLabel>Body</FormLabel>
                   <Textarea placeholder="Example:  1. Carrot curry..." minRows={10} sx={{width:"90%"}}/>
-                  <FormHelperText sx={{paddingBottom:"50px"}}>Enter the note content here</FormHelperText><br /><br />
+                  <FormHelperText sx={{paddingBottom:"50px"}}>Enter the note content here</FormHelperText>
+
+                  <FormControlLabel
+                    control={
+                      <Switch name="reminder" />
+                    }
+                    label="Set Reminder"
+                  />
 
                 </FormControl>
               </div>
