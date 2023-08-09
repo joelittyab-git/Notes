@@ -9,8 +9,16 @@ import Typography from '@mui/joy/Typography';
 import TextField from '@mui/material/TextField';
 import { useEffect , useState } from 'react';
 import Backdrop from '@mui/material/Backdrop';
-import  TextareaAutosize  from '@mui/base/TextareaAutosize';
+import Input from '@mui/joy/Input';
 import { styled } from '@mui/system';
+import FormControl from '@mui/joy/FormControl';
+import FormHelperText from '@mui/joy/FormHelperText';
+import FormLabel from '@mui/joy/FormLabel';
+import Textarea from '@mui/joy/Textarea';
+import Button from '@mui/joy/Button';
+import SaveIcon from '@mui/icons-material/Save';
+
+
 
 const blue = {
   100: '#DAECFF',
@@ -62,16 +70,25 @@ const NotesPage = () => {
         open={showNewNote}
         onClick={toggleNewNote}
       >
-        <div style={{width:"80%", position:"absolute", top:"50%",height:"70%" , left:"50%", transform:"translate(-50%, -50%)", backdropFilter:"opacity",zIndex:100}} onClick={event=>event.stopPropagation()}>
+        <div style={{width:"80%", position:"absolute", top:"50%",height:"85%" , left:"50%", transform:"translate(-50%, -50%)", backdropFilter:"opacity",zIndex:100}} onClick={event=>event.stopPropagation()}>
           <Card sx={{width:"100%",height:"100%", backgroundColor:"#FAFAFA"}}>
             <CardContent>
-              <div className="top" style={{display:'flex', justifyContent:"center"}}>
-              <GreyThemedTextField
-                label="Grey Themed Input"
-                multiline
-                rows={4}
-                variant="outlined"
-              />
+              <div className="top" style={{display:'flex', justifyContent:"center", width:"100%"}}>
+
+                <FormControl sx={{width:"100%", display:"flex", justifyContent:"center"}}>
+
+                  <FormLabel>Title</FormLabel>
+                  <Input placeholder="Example: Dinner Menu...." />
+                  <FormHelperText>Enter the title of the note here</FormHelperText><br />
+
+                  <FormLabel>Body</FormLabel>
+                  <Textarea placeholder="Example:  1. Carrot curry..." minRows={10} sx={{width:"90%"}}/>
+                  <FormHelperText sx={{paddingBottom:"50px"}}>Enter the note content here</FormHelperText><br /><br />
+
+                </FormControl>
+              </div>
+              <div className='south' style={{display:"flex", justifyContent:"center"}}>
+                  <Button startDecorator={<SaveIcon/>} size="md" sx={{width:"100px", position:'absolute', bottom:15}}>Save</Button>
               </div>
             </CardContent>
           </Card>
@@ -79,13 +96,14 @@ const NotesPage = () => {
       </Backdrop>
 {/* ---------------------------------------------------------------------------------------------------------------------------------------------------------------*/}
 
+{/* ----------------------------------------------------Add-Note-button--------------------------------------------------------------------------------------- */}
       <div className="add-button">
         <IconButton onClick={toggleNewNote} sx={{backgroundColor:"#1976D2", ":hover":{backgroundColor:"transparent"}}}>
           <AddIcon fontSize="large" htmlColor="black" sx={{":hover":{color:"#1976D2"}}}/>
         </IconButton>
       </div>
     </div>
-  )
+  );
 }
 
 export default NotesPage
