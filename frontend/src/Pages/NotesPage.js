@@ -2,24 +2,11 @@ import React from 'react'
 import IconButton from '@mui/material/IconButton'
 import AddIcon from '@mui/icons-material/Add';
 import './Stylesheets/NotesPage.css';
-import Box from '@mui/joy/Box';
-import Card from '@mui/joy/Card';
-import CardContent from '@mui/joy/CardContent';
-import Typography from '@mui/joy/Typography';
 import TextField from '@mui/material/TextField';
-import { useEffect , useState } from 'react';
-import Backdrop from '@mui/material/Backdrop';
-import Input from '@mui/joy/Input';
+import { useState } from 'react';
 import { styled } from '@mui/system';
-import FormControl from '@mui/joy/FormControl';
-import FormHelperText from '@mui/joy/FormHelperText';
-import FormLabel from '@mui/joy/FormLabel';
-import Textarea from '@mui/joy/Textarea';
-import Button from '@mui/joy/Button';
-import SaveIcon from '@mui/icons-material/Save';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
 import NewNoteForm from '../Components/Notes/NewNoteForm';
+import Client from '../Base/Api/BaseClient'
 
 
 const blue = {
@@ -73,6 +60,10 @@ const NotesPage = () => {
     setShowNewNote(!showNewNote);
   }
 
+  const saveNote = (event) => {
+    
+  }
+
   return (
     <div>
 {/*--------------------------------------------------------New-note-dialogue-box------------------------------------------------------------------------------------ */}
@@ -112,7 +103,7 @@ const NotesPage = () => {
           </Card>
         </div>
       </Backdrop> */}
-      <NewNoteForm onClick={toggleNewNote} showNewNote={showNewNote} />
+      <NewNoteForm onClick={toggleNewNote} showNewNote={showNewNote}/>
 {/* ---------------------------------------------------------------------------------------------------------------------------------------------------------------*/}
 
 {/* ----------------------------------------------------Add-Note-button--------------------------------------------------------------------------------------- */}
