@@ -60,8 +60,9 @@ const NotesPage = () => {
     setShowNewNote(!showNewNote);
   }
 
-  const saveNote = (event) => {
-    
+  const saveNote = async(event) => {
+    const response = await Client.post('notes/',{});
+    console.log(response);
   }
 
   return (
@@ -103,7 +104,7 @@ const NotesPage = () => {
           </Card>
         </div>
       </Backdrop> */}
-      <NewNoteForm onClick={toggleNewNote} showNewNote={showNewNote}/>
+      <NewNoteForm onClick={toggleNewNote} showNewNote={showNewNote} saveNoteButtonHandler={saveNote}/>
 {/* ---------------------------------------------------------------------------------------------------------------------------------------------------------------*/}
 
 {/* ----------------------------------------------------Add-Note-button--------------------------------------------------------------------------------------- */}

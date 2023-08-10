@@ -19,7 +19,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 
-const NewNoteForm = ({onClick, showNewNote}) => {
+const NewNoteForm = ({onClick, showNewNote, saveNoteButtonHandler}) => {
   return (
     <div>
      <Backdrop
@@ -60,7 +60,7 @@ const NewNoteForm = ({onClick, showNewNote}) => {
                 </FormControl>
               </div>
               <div className='south' style={{display:"flex", justifyContent:"center"}}>
-                  <Button startDecorator={<SaveIcon/>} size="md" sx={{width:"100px", position:'absolute', bottom:15}}>Save</Button>
+                  <Button startDecorator={<SaveIcon/>} onClick={saveNoteButtonHandler} size="md" sx={{width:"100px", position:'absolute', bottom:15}}>Save</Button>
               </div>
             </CardContent>
           </Card>
