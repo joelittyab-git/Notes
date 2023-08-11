@@ -24,25 +24,25 @@ class NoteHandlerView(APIView):
           user = request.user
           data = request.data
           
-          serialzed = NoteSerializer(data)
+          serialzed = (data)
           
           # getting serialized data
           try:
-               note_title = serialzed.data.get("title")
-               note_body = serialzed.data.get("body")
-               note_reminder_status = serialzed.data.get("reminder")
+               note_title = serialzed.get("title")
+               note_body = serialzed.get("body")
+               note_reminder_status = serialzed.get("reminder")
           except Exception as e:
-               return Response({"upload_status":"err", "info":{e}})
+               return Response({"upload_status":"err", "info":{str(e)}})
           
           # saving new note instance to database
           try:
                Notes.objects.create(author = user, title= note_title, body=note_body, remind_user = note_reminder_status).save()
           except Exception as e:
                #database integrity error
-               return Response({"upload_status":"err", "info":{e}})
+               return Response({"upload_status":"err", "info":{str(e)}})
           
           
-          return Response()
+          return Response({"upload_status":"success"})
           
           
           

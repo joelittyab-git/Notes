@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { styled } from '@mui/system';
 import NewNoteForm from '../Components/Notes/NewNoteForm';
 import Client from '../Base/Api/BaseClient'
+import BaseClient from '../Base/Api/BaseClient';
 
 
 const blue = {
@@ -61,7 +62,14 @@ const NotesPage = () => {
   }
 
   const saveNote = async(event) => {
-    const response = await Client.post('notes/',{});
+    //POST data for new note creation
+    const postForm = {
+      "title":formData.title,
+      "body":formData.body,
+      "reminder":formData.remind
+    };
+
+    const response = await BaseClient.post('notes/',postForm);
     console.log(response);
   }
 
@@ -104,7 +112,7 @@ const NotesPage = () => {
           </Card>
         </div>
       </Backdrop> */}
-      <NewNoteForm onClick={toggleNewNote} showNewNote={showNewNote} saveNoteButtonHandler={saveNote}/>
+      <NewNoteForm onClick={toggleNewNote} showNewNote={showNewNote} saveNoteButtonHandler={saveNote} formData={formData} setFormData={setFormData}/>
 {/* ---------------------------------------------------------------------------------------------------------------------------------------------------------------*/}
 
 {/* ----------------------------------------------------Add-Note-button--------------------------------------------------------------------------------------- */}

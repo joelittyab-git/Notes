@@ -19,7 +19,16 @@ import SaveIcon from '@mui/icons-material/Save';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 
-const NewNoteForm = ({onClick, showNewNote, saveNoteButtonHandler}) => {
+const NewNoteForm = ({onClick, showNewNote, saveNoteButtonHandler, formData, setFormData}) => {
+
+  const formChangeHandler = event => {
+    if(event.target.name ==='title-input'){
+      setFormData({...formData, title:event.target.value});
+    }else if(event.target.name === "body-input"){
+      setFormData({...formData, body:event.target.value});
+    }
+  }  
+
   return (
     <div>
      <Backdrop
@@ -35,7 +44,7 @@ const NewNoteForm = ({onClick, showNewNote, saveNoteButtonHandler}) => {
                 <FormControl sx={{width:"100%", display:"flex", justifyContent:"center"}}>
 
                   <FormLabel>Title</FormLabel>
-                  <Input placeholder="Example: Dinner Menu...." />
+                  <Input placeholder="Example: Dinner Menu...." onChange={formChangeHandler} name='title-input'/>
                   <FormHelperText>Enter the title of the note here</FormHelperText><br />
                 
                 </FormControl>
@@ -43,7 +52,7 @@ const NewNoteForm = ({onClick, showNewNote, saveNoteButtonHandler}) => {
                 <FormControl sx={{width:"100%", display:"flex", justifyContent:"center"}}>
 
                   <FormLabel>Body</FormLabel>
-                  <Textarea placeholder="Example:  1. Carrot curry..." minRows={10} sx={{width:"90%"}}/>
+                  <Textarea placeholder="Example:  1. Carrot curry..." minRows={10} sx={{width:"90%"}} onChange={formChangeHandler} name='body-input'/>
                   <FormHelperText sx={{paddingBottom:"50px"}}>Enter the note content here</FormHelperText>
 
                 </FormControl>
