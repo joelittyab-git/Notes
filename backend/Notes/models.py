@@ -25,6 +25,7 @@ class Notes(models.Model):
      def __str__(self)->str:
           return str(self.body)
      
+     
      class Meta:
           ordering = ['created']
 
