@@ -14,11 +14,10 @@ function OffCanvas({visibilityStatus, setVisibilityStaus}) {
 
       <Offcanvas show={visibilityStatus} onHide={()=>setVisibilityStaus(false)} data-bs-theme="dark">
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+          <Offcanvas.Title>Your Panel</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          Some text as placeholder. In real life you can have the elements you
-          have chosen. Like, text, images, lists, etc.
+          Offcanvas
         </Offcanvas.Body>
       </Offcanvas>
     </>

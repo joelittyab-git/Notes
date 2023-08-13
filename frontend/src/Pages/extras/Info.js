@@ -1,21 +1,22 @@
 import React from 'react'
 import BaseClient from '../../Base/Api/BaseClient'
+import { createRoot } from 'react-dom/client';
+
+// Clear the existing HTML content
+
 
 const Info = () => {
 
-     const buttonClick = async() =>{
-          const response = await BaseClient.delete('user/auth/',{
-               headers:{
-                    Authorization:"Token 58edc40ca5457d20c671f55c5cd7d3704d797c13"
-               }
-          }
-          );
-          console.log(response);
+     const buttonClick = () => {
+          const root = createRoot(document.getElementById('note-expand'));
+          root.render(<h1 color='white' style={{color:"white"}}>Hello, world</h1>);
      }
 
   return (
     <div>
-     <button onClick={buttonClick}></button>
+          <button onClick={buttonClick}>
+               Click me
+          </button>
     </div>
   )
 }

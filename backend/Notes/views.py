@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .models import Notes
 from Core.utils import Request
+from django.db import IntegrityError
 
 '''
 -----------------------------------------------------------------------------------------Authentication-View-------------------------------------------------------------------------------------------------
@@ -51,8 +52,19 @@ class NoteHandlerView(APIView):
      def delete(self, request, *args, **kwargs):
           #getting request information
           user, data = Request.get_request_information(request)
+          pk = data.get("pk")
           
-          return Response({str(user):str(data)})
+          # deletion from database
+          try:
+               note_post = Notes.objects.get(pk=pk, user=user)
+               info = note_post.delete()
+               return Response({"deletion_status":"success", "info":str(info)})
+          except IntegrityError as e:
+               return Response({"deletion_status":"db_integrity_error"})
+          except Exception as e:
+               return Response({"deletion_status":"err", "info":str(e) })
+          
+
           
           
           

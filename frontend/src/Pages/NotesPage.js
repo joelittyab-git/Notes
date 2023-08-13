@@ -3,44 +3,31 @@ import IconButton from '@mui/material/IconButton'
 import AddIcon from '@mui/icons-material/Add';
 import './Stylesheets/NotesPage.css';
 import TextField from '@mui/material/TextField';
-import { useState } from 'react';
-import { styled } from '@mui/system';
+import { useState, useEffect } from 'react';
 import NewNoteForm from '../Components/Notes/NewNoteForm';
 import BaseClient from '../Base/Api/BaseClient';
+import {useNavigate} from 'react-router-dom';
 
 
-const blue = {
-  100: '#DAECFF',
-  200: '#b6daff',
-  400: '#3399FF',
-  500: '#007FFF',
-  600: '#0072E5',
-  900: '#003A75',
-};
-
-const grey = {
-  50: '#f6f8fa',
-  100: '#eaeef2',
-  200: '#d0d7de',
-  300: '#afb8c1',
-  400: '#8c959f',
-  500: '#6e7781',
-  600: '#57606a',
-  700: '#424a53',
-  800: '#32383f',
-  900: '#24292f',
-};
-
-const GreyThemedTextField = styled(TextField)(({ theme }) => ({
-  backgroundColor: '#f2f2f2', // Grey background color
-  '& .MuiOutlinedInput-root': {
-    '& fieldset': {
-      borderColor: 'grey', // Grey border color
-    },
-  },
-}));
 
 const NotesPage = () => {
+  
+  const navigate = useNavigate();
+
+  //efect to redirect to login page if note logged in
+  useEffect(
+    ()=>{
+      try{
+        const token = localStorage.getItem('Authorization');
+        if(token===null||token==undefined){
+          navigate('/user/login');
+        }
+      }catch(e){
+        navigate('/user/login');
+      }
+    },
+    []
+  );
 
   //Button states
   const [showNewNote, setShowNewNote] = useState(false);
