@@ -1,15 +1,8 @@
 import React from 'react';
-import IconButton from '@mui/material/IconButton';
-import AddIcon from '@mui/icons-material/Add';
-import Box from '@mui/joy/Box';
 import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
-import Typography from '@mui/joy/Typography';
-import TextField from '@mui/material/TextField';
-import { useEffect , useState } from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Input from '@mui/joy/Input';
-import { styled } from '@mui/system';
 import FormControl from '@mui/joy/FormControl';
 import FormHelperText from '@mui/joy/FormHelperText';
 import FormLabel from '@mui/joy/FormLabel';
@@ -22,6 +15,7 @@ import Switch from '@mui/material/Switch';
 const NewNoteForm = ({onClick, showNewNote, saveNoteButtonHandler, formData, setFormData}) => {
 
   const formChangeHandler = event => {
+    //setting the form data based on targets given name
     if(event.target.name ==='title-input'){
       setFormData({...formData, title:event.target.value});
     }else if(event.target.name === "body-input"){

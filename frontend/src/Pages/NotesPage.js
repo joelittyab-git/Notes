@@ -6,7 +6,6 @@ import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import { styled } from '@mui/system';
 import NewNoteForm from '../Components/Notes/NewNoteForm';
-import Client from '../Base/Api/BaseClient'
 import BaseClient from '../Base/Api/BaseClient';
 
 
