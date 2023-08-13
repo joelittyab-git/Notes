@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from .serializer import NoteSerializer
 from .models import Notes
+from Core.utils import Request
 
 '''
 -----------------------------------------------------------------------------------------Authentication-View-------------------------------------------------------------------------------------------------
@@ -14,6 +14,12 @@ from .models import Notes
           {"upload_status":"db_integrity_error"} -> database integrity error
           {"upload_status":"err", info:{...} } -> exception
           
+**URL["/notes/"] => deletes the notes
+     :request:{"pk":(int)---}(DELETE)
+     :response:
+          {"deletion_status":"success"} -> note has been successfully deleted
+          {"deletion_status":"db_integrity_error"} -> database integrity error
+          {"deletion_status":"err", info:{...} } -> exception
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 '''
 class NoteHandlerView(APIView):
@@ -21,9 +27,7 @@ class NoteHandlerView(APIView):
      
      def post(self,request,**args):
           # getting the http request information
-          user = request.user
-          data = request.data
-          
+          user, data = Request.get_request_information(request)
           serialzed = (data)
           
           # getting serialized data
@@ -43,6 +47,12 @@ class NoteHandlerView(APIView):
           
           
           return Response({"upload_status":"success"})
+     
+     def delete(self, request, *args, **kwargs):
+          #getting request information
+          user, data = Request.get_request_information(request)
+          
+          return Response({str(user):str(data)})
           
           
           
