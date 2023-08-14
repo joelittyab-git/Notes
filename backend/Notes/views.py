@@ -21,6 +21,13 @@ from django.db import IntegrityError
           {"deletion_status":"success"} -> note has been successfully deleted
           {"deletion_status":"db_integrity_error"} -> database integrity error
           {"deletion_status":"err", info:{...} } -> exception
+          
+**URL["/notes/"] => Edits the notes
+     :request:{"body":---, "title":---}(PUT)
+     :response:
+          {"upload_status":"success"} -> note has been successfully updated
+          {"upload_status":"db_integrity_error"} -> database integrity error
+          {"upload_status":"err", info:{...} } -> exception          
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 '''
 class NoteHandlerView(APIView):
@@ -63,6 +70,14 @@ class NoteHandlerView(APIView):
                return Response({"deletion_status":"db_integrity_error"})
           except Exception as e:
                return Response({"deletion_status":"err", "info":str(e) })
+          
+
+     def put(self, request, *args, **kwargs):
+          # gets the reuqest data and user related
+          user, data = Request.get_request_information(request)
+          
+          
+          return Response({})
           
 
           
