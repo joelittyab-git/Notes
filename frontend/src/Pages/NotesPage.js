@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import NewNoteForm from '../Components/Notes/NewNoteForm';
 import BaseClient from '../Base/Api/BaseClient';
 import {useNavigate} from 'react-router-dom';
+import Note  from  "./../Components/Notes/Note"
 
 
 
@@ -100,6 +101,10 @@ const NotesPage = () => {
       </Backdrop> */}
       <NewNoteForm onClick={toggleNewNote} showNewNote={showNewNote} saveNoteButtonHandler={saveNote} formData={formData} setFormData={setFormData}/>
 {/* ---------------------------------------------------------------------------------------------------------------------------------------------------------------*/}
+
+{/* -----------------------------------------------------------------Dislay-notes----------------------------------------------------------------------------------------- */}
+      <Note/>
+{/* ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- */}
 
 {/* ----------------------------------------------------Add-Note-button--------------------------------------------------------------------------------------- */}
       <div className="add-button">

@@ -76,8 +76,25 @@ class NoteHandlerView(APIView):
           # gets the reuqest data and user related
           user, data = Request.get_request_information(request)
           
+          # getting the data
+          try:
+               body = data.get("body")
+               title = data.get("title")
+               remind = data.get("remind")
+               key = data.get("pk")
+          except Exception as e:
+               pass
           
-          return Response({})
+          # updating in the database
+          try:
+               note = Notes.objects.get(user = user,key = key)
+               note.body =  body
+               note.title = title
+               note.save()
+          except Exception as e:
+               return Response({"upload_status":"err", "info":{str(e)}})
+          
+          return Response({"upload_status":"success"})
           
 
           
