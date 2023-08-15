@@ -12,8 +12,39 @@ import Note  from  "./../Components/Notes/Note"
 
 
 const NotesPage = () => {
+
+  let arr = [1,2];
   
+  //initilization
   const navigate = useNavigate();
+
+  //note dragger event handlers
+  let offSetX, offSetY;
+  let isDragging = false;
+  let element;
+  const mouseDownEvent = (e) => {
+    isDragging = true;
+    element = e.target;
+    offSetX = e.clientX - element.getBoundingClientRect().left;
+    offSetY = e.clientY - element.getBoundingClientRect().top;
+    element.style.cursor = 'grabbing';
+
+  }
+
+  const mouseUpEvent = (e) => {
+    isDragging = false;
+    element.style.cursor = 'grab';
+  }
+  
+  const mouseMoveEvent = (e) => {
+    if (!isDragging) return;
+
+    const newX = e.clientX - offSetX;
+    const newY = e.clientY - offSetY;
+
+    element.style.left = `${newX}px`;
+    element.style.top = `${newY}px`;
+  }
 
   //efect to redirect to login page if note logged in
   useEffect(
@@ -63,47 +94,18 @@ const NotesPage = () => {
   return (
     <div>
 {/*--------------------------------------------------------New-note-dialogue-box------------------------------------------------------------------------------------ */}
-      {/* <Backdrop
-        sx={{ color: '#fff', zIndex: "9" }}
-        open={showNewNote}
-        onClick={toggleNewNote}
-      >
-        <div style={{width:"80%", position:"absolute", top:"50%",height:"85%" , left:"50%", transform:"translate(-50%, -50%)", backdropFilter:"opacity",zIndex:100}} onClick={event=>event.stopPropagation()}>
-          <Card sx={{width:"100%",height:"100%", backgroundColor:"#FAFAFA"}}>
-            <CardContent>
-              <div className="top" style={{display:'flex', justifyContent:"center", width:"100%"}}>
-
-                <FormControl sx={{width:"100%", display:"flex", justifyContent:"center"}}>
-
-                  <FormLabel>Title</FormLabel>
-                  <Input placeholder="Example: Dinner Menu...." />
-                  <FormHelperText>Enter the title of the note here</FormHelperText><br />
-
-                  <FormLabel>Body</FormLabel>
-                  <Textarea placeholder="Example:  1. Carrot curry..." minRows={10} sx={{width:"90%"}}/>
-                  <FormHelperText sx={{paddingBottom:"50px"}}>Enter the note content here</FormHelperText>
-
-                  <FormControlLabel
-                    control={
-                      <Switch name="reminder" />
-                    }
-                    label="Set Reminder"
-                  />
-
-                </FormControl>
-              </div>
-              <div className='south' style={{display:"flex", justifyContent:"center"}}>
-                  <Button startDecorator={<SaveIcon/>} size="md" sx={{width:"100px", position:'absolute', bottom:15}}>Save</Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </Backdrop> */}
       <NewNoteForm onClick={toggleNewNote} showNewNote={showNewNote} saveNoteButtonHandler={saveNote} formData={formData} setFormData={setFormData}/>
 {/* ---------------------------------------------------------------------------------------------------------------------------------------------------------------*/}
 
 {/* -----------------------------------------------------------------Dislay-notes----------------------------------------------------------------------------------------- */}
-      <Note/>
+      {arr.map(()=>(
+        <div className="note-row" style={{display:"flex", gap:"50px", justifyContent:"center", paddingBottom:"50px", paddingTop:"40px"}}>
+          <Note mouseDownEvent={mouseDownEvent} mouseUpEvent={mouseUpEvent} mouseMoveEvent={mouseMoveEvent}/>
+          <Note mouseDownEvent={mouseDownEvent} mouseUpEvent={mouseUpEvent} mouseMoveEvent={mouseMoveEvent}/>
+          <Note mouseDownEvent={mouseDownEvent} mouseUpEvent={mouseUpEvent} mouseMoveEvent={mouseMoveEvent}/>
+          <Note mouseDownEvent={mouseDownEvent} mouseUpEvent={mouseUpEvent} mouseMoveEvent={mouseMoveEvent}/>
+        </div>
+      ))}
 {/* ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- */}
 
 {/* ----------------------------------------------------Add-Note-button--------------------------------------------------------------------------------------- */}
@@ -116,4 +118,4 @@ const NotesPage = () => {
   );
 }
 
-export default NotesPage
+export default NotesPage;

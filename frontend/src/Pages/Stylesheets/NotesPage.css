@@ -1,5 +1,5 @@
 .add-button{
-     position: absolute;
+     position: fixed;
      bottom: 20px; /* Adjust this value to control the spacing from the bottom */
      right: 20px; /* Adjust this value to control the spacing from the right */
      padding: 10px; /* Add padding for spacing inside the div */

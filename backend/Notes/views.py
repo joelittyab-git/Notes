@@ -90,6 +90,7 @@ class NoteHandlerView(APIView):
                note = Notes.objects.get(user = user,key = key)
                note.body =  body
                note.title = title
+               # remind implementation
                note.save()
           except Exception as e:
                return Response({"upload_status":"err", "info":{str(e)}})
