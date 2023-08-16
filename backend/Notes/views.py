@@ -137,12 +137,3 @@ class NoteHandlerView(APIView):
           except Exception as e:
                return Response({"obtain_status":"err", "info":{str(e)}})
           
-
-          
-
-          
-          
-          
-          
-          
-          

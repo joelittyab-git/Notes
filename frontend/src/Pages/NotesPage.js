@@ -98,14 +98,10 @@ const NotesPage = () => {
 {/* ---------------------------------------------------------------------------------------------------------------------------------------------------------------*/}
 
 {/* -----------------------------------------------------------------Dislay-notes----------------------------------------------------------------------------------------- */}
-      {arr.map(()=>(
+
         <div className="note-row" style={{display:"flex", gap:"50px", justifyContent:"center", paddingBottom:"50px", paddingTop:"40px"}}>
           <Note mouseDownEvent={mouseDownEvent} mouseUpEvent={mouseUpEvent} mouseMoveEvent={mouseMoveEvent}/>
-          <Note mouseDownEvent={mouseDownEvent} mouseUpEvent={mouseUpEvent} mouseMoveEvent={mouseMoveEvent}/>
-          <Note mouseDownEvent={mouseDownEvent} mouseUpEvent={mouseUpEvent} mouseMoveEvent={mouseMoveEvent}/>
-          <Note mouseDownEvent={mouseDownEvent} mouseUpEvent={mouseUpEvent} mouseMoveEvent={mouseMoveEvent}/>
         </div>
-      ))}
 {/* ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- */}
 
 {/* ----------------------------------------------------Add-Note-button--------------------------------------------------------------------------------------- */}
