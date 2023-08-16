@@ -10,10 +10,10 @@ class Request:
           (user:(contrib.auth.mdoels.User), body:(str))
      '''
      @staticmethod
-     def get_request_information(req:HttpRequest):
+     def get_request_data(req:HttpRequest):
           # getting the request user information:
-          if(req.user.is_authenticated):user = User(req.user)
-          else: user = None
+          if(req.user.is_authenticated):user = (req.user)
+          else: user = "None"
 
           try:body = dict(req.data)
           except Exception as e:body = None

@@ -20,3 +20,4 @@ class MembershipType:
      @classmethod
      def get_membership_type(member:CollabPannelMembership):
           return member.membership_type
+     

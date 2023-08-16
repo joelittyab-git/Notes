@@ -15,11 +15,12 @@ from django.contrib.auth.models import User
 class Notes(models.Model):
      key = models.BigAutoField(primary_key=True)
      author = models.ForeignKey(User,on_delete=models.CASCADE)
-     title = models.CharField(max_length=100)
-     body = models.CharField(max_length=800)
+     title = models.CharField(max_length=100, serialize=True)
+     body = models.CharField(max_length=800, serialize=True)
      remind_user = models.BooleanField(default=False)
      created = models.DateTimeField(auto_now_add=True)
      edited = models.DateTimeField(auto_now=True)
+     scope = models.IntegerField(default=2)
      
      
      def __str__(self)->str:
@@ -27,7 +28,7 @@ class Notes(models.Model):
      
      
      class Meta:
-          ordering = ['created']
+          ordering = ['created',]
 
 '''
 ------------------------------------------------------------------------------NotesGroup-model[through]-------------------------------------------------------------------------------------------------
