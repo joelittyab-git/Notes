@@ -46,7 +46,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'User.apps.UserConfig',
-    'Notes.apps.NotesConfig'
+    'Notes.apps.NotesConfig',
+    
+    'channels',
+    'channels_postgres',
 ]
 
 REST_FRAMEWORK = {
@@ -100,12 +103,20 @@ ASGI_APPLICATION = 'backend.asgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': f'{Database.NAME}',
-        'USER': f'{Database.USERNAME}',
-        'PASSWORD': f'{Database.PASSWORD}',
-        'HOST': f'{Database.HOST}',
-        'PORT': f'{Database.PORT}',
-    }
+        'NAME': f'{Database.Primary.NAME}',
+        'USER': f'{Database.Primary.USERNAME}',
+        'PASSWORD': f'{Database.Primary.PASSWORD}',
+        'HOST': f'{Database.Primary.HOST}',
+        'PORT': f'{Database.Primary.PORT}',
+    },
+    'channels_postgres': {
+		'ENGINE': 'django.db.backends.postgresql_psycopg2',
+		'NAME': f'{Database.WebSocketChannelLayer.NAME}',
+		'USER': f'{Database.WebSocketChannelLayer.USERNAME}',
+		'PASSWORD': f'{Database.WebSocketChannelLayer.PASSWORD}',
+		'HOST': f'{Database.WebSocketChannelLayer.HOST}',
+		'PORT': f'{Database.WebSocketChannelLayer.PORT}',
+	}
 }
 
 

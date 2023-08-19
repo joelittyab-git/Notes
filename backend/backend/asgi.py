@@ -12,13 +12,14 @@ from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter
 
 from django.core.asgi import get_asgi_application
+from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
 
 # mapping for incoming requests for their protocols
 application = ProtocolTypeRouter(
      {
-          "http":get_asgi_application()
+          "http":get_wsgi_application()
      }
 )
 
