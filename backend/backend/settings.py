@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     
     'User.apps.UserConfig',
     'Notes.apps.NotesConfig',
+    'ChatRoom',
     
     'channels',
     'channels_postgres',
@@ -117,6 +118,20 @@ DATABASES = {
 		'HOST': f'{Database.WebSocketChannelLayer.HOST}',
 		'PORT': f'{Database.WebSocketChannelLayer.PORT}',
 	}
+}
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_postgres.core.PostgresChannelLayer',
+        'CONFIG': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': f'{Database.WebSocketChannelLayer.NAME}',
+            'USER': f'{Database.WebSocketChannelLayer.USERNAME}',
+            'PASSWORD': f'{Database.WebSocketChannelLayer.PASSWORD}',
+            'HOST': f'{Database.WebSocketChannelLayer.HOST}',
+            'PORT': f'{Database.WebSocketChannelLayer.PORT}',
+        },
+    },
 }
 
 
