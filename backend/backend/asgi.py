@@ -8,11 +8,10 @@ https://docs.djangoproject.com/en/4.2/howto/deployment/asgi/
 """
 
 import os
-from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter
 from channels.routing import URLRouter
 from channels.auth import AuthMiddlewareStack
-from django.core.asgi import get_asgi_application
+from channels.security.websocket import OriginValidator
 from django.core.wsgi import get_wsgi_application
 from ChatRoom.websocket_router  import websocket_urlpatterns
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
@@ -21,10 +20,17 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
 application = ProtocolTypeRouter(
      {
           "http":get_wsgi_application(),
-          'websocket':AuthMiddlewareStack(
-               URLRouter(
-                    websocket_urlpatterns
-               )
+          'websocket':(
+               AuthMiddlewareStack(
+                    URLRouter(
+                         websocket_urlpatterns
+                    )
+               )#,
+               # allowed origin for validation
+               # [
+               #      "http://localhost:3000",
+               #      "localhost:3000"
+               # ]
           )
      }
 )
